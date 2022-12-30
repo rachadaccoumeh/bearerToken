@@ -13,7 +13,7 @@ class Location(models.Model):
     address = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.address
+        return self.city
 
     @property
     def abr_location(self):

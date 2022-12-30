@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from app.views import LocationViewSet, HospitalViewSet, location_add
+from app.views import LocationViewSet, HospitalViewSet, location_add, hospital_add
 
 router = routers.DefaultRouter()
 router.register(r'location', LocationViewSet)
@@ -27,5 +27,6 @@ urlpatterns = [
     path('', include('apiauthentication.urls')),
     path('', include(router.urls)),
     path('add-location', location_add),
+    path('add-hospital', hospital_add),
 
 ]

@@ -44,3 +44,20 @@ def location_add(request):
         return JsonResponse({'message': 'location is created successfully!'}, status=status.HTTP_201_CREATED)
     except:
         return JsonResponse({'message': 'Error!'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+def hospital_add(request):
+    try:
+        if request.method == 'POST':
+            try:
+                loc = Location.objects.get(city=request.data['city'])
+            except:
+                loc = Location.objects.create(city=request.data['city'], zip='test')
+            hospital = Hospital.objects.create(name=request.data['name'], phone=request.data['phone'], location=loc)
+
+        return JsonResponse({'message': 'hospital is created successfully!'}, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        return JsonResponse({'message': 'Error! ' + str(e)}, status=status.HTTP_404_NOT_FOUND)
