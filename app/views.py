@@ -61,3 +61,16 @@ def hospital_add(request):
         return JsonResponse({'message': 'hospital is created successfully!'}, status=status.HTTP_201_CREATED)
     except Exception as e:
         return JsonResponse({'message': 'Error! ' + str(e)}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['DELETE'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+def location_delete(request, pk):
+    try:
+        location = Location.objects.get(pk=pk)
+        location.delete()
+        return JsonResponse({'message': 'The location was deleted successfully!'},
+                            status=status.HTTP_204_NO_CONTENT)
+    except Location.DoesNotExist:
+        return JsonResponse({'message': 'The location does not exist'}, status=status.HTTP_404_NOT_FOUND)
